@@ -1,0 +1,17 @@
+{
+  "name": "fortress-defenders",
+  "version": "1.0.0",
+  "description": "Iggy's game API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "mongoose": "*",
+    "nodemon": "^1.17.5"
+  },
+  "author": "Wyzardsleeves",
+  "license": "ISC"
+}
