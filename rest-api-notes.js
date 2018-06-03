@@ -61,3 +61,18 @@ module.exports.getModelName = function(callback, limit){
 
 //in app.js
 ModelName = require('./models/modelName.js'); //includes Model
+
+//fetch single object
+module.exports.getModelNameById = function(id, callback){
+  ModelName.findById(id, callback);  //mongoose method that finds by id
+}
+
+//in app.js (may or nay not need the _ in front of id)
+app.get('/api/cards/:_id', function(req, res){ //calls for the id
+  Cards.getCardById(req.params._id, function(err, cards){     //uses By Id method to get specific card
+    if(err){
+      throw err;
+    }
+    res.json(cards);
+  })
+});

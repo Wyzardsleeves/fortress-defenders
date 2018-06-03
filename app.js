@@ -19,7 +19,18 @@ app.get('/', function(req, res){
   res.send("Please use /api/fortress-defenders");
 });
 
-app.get('/api/fortress-defenders', function(req, res){
+//fetch types
+app.get('/api/types', function(req, res){
+  Types.getTypes(function(err, types){
+    if(err){
+      throw err;
+    }
+    res.json(types);
+  })
+});
+
+//fetch cards
+app.get('/api/cards', function(req, res){
   Cards.getCards(function(err, cards){
     if(err){
       throw err;
@@ -28,12 +39,23 @@ app.get('/api/fortress-defenders', function(req, res){
   })
 });
 
-app.get('/api/fortress-defenders/types', function(req, res){
-  Types.getTypes(function(err, types){
+//fetch card by id
+app.get('/api/cards/:id', function(req, res){
+  Cards.getCardById(req.params.id, function(err, card){
     if(err){
       throw err;
     }
-    res.json(types);
+    res.json(card);
+  })
+});
+
+//add a card
+app.post('/api/cards/:id', function(req, res){
+  Cards.getCardById(req.params.id, function(err, card){
+    if(err){
+      throw err;
+    }
+    res.json(card);
   })
 });
 
