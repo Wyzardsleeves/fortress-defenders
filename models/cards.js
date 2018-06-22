@@ -66,3 +66,24 @@ module.exports.getCards = function(callback, limit){
 module.exports.getCardById = function(id, callback){
   Cards.findById(id, callback);
 }
+
+module.exports.addCard = function(card, callback){
+  Cards.create(card, callback);
+}
+
+/*
+{
+  "name": "Gaul Ghoule",
+  "type": "red",
+  "passive": "More powerful at night",
+  "rank": "veteran",
+  "req": "Soldier*1",
+  "hp": "80",
+  "def": "15",
+  "base_ap": "2",
+  "image_url": "https://vignette.wikia.nocookie.net/fallout/images/e/e3/Ghoul.png/revision/latest?cb=20160106102356",
+  "skill_1": "Deal 20 dmg",
+  "skill_2": "Next attack will miss",
+  "skill_3": "-"
+}
+*/

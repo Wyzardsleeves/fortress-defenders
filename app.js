@@ -12,8 +12,8 @@ mongoose.connect('mongodb://localhost/fortressDefenders');
 var db = mongoose.connection;
 
 //body parser middleware
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res){
   res.send("Please use /api/fortress-defenders");
@@ -26,6 +26,30 @@ app.get('/api/types', function(req, res){
       throw err;
     }
     res.json(types);
+  })
+});
+
+//add a type
+app.post('/api/types', function(req, res){
+  let type = req.body;
+  Types.addType(type, function(err, type){
+    if(err){
+      throw err;
+    }
+    res.json(type);
+  })
+});
+
+//update
+//5b2adce5b808941dd4c2fc03
+app.put('/api/types/:id', function(req, res){
+  let id = req.params.id
+  let type = req.body;
+  Types.updateType(id, type, {}, function(err, type){
+    if(err){
+      throw err;
+    }
+    res.json(type);
   })
 });
 
@@ -50,8 +74,9 @@ app.get('/api/cards/:id', function(req, res){
 });
 
 //add a card
-app.post('/api/cards/:id', function(req, res){
-  Cards.getCardById(req.params.id, function(err, card){
+app.post('/api/cards', function(req, res){
+  let cards = req.body;
+  Cards.addCard(cards, function(err, card){
     if(err){
       throw err;
     }

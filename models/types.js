@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let typesSchema = mongoose.Schema({
-  name:{
+  name: {
     type: String,
     required: true
   },
@@ -11,9 +11,21 @@ let typesSchema = mongoose.Schema({
   }
 });
 
-let Types = module.exports = mongoose.model('Type', typesSchema);
+let Types = module.exports = mongoose.model('Types', typesSchema);
 
 // Get Type
 module.exports.getTypes = function(callback, limit){
   Types.find(callback).limit(limit);
-}
+};
+
+module.exports.addType = function(type, callback){
+  Types.create(type, callback);
+};
+
+module.exports.updateType = function(id, type, options, callback){
+  let query = {_id: id}
+  let update = {
+    name: type.name
+  }
+  Types.findOneAndUpdate(query, update, options, callback);
+};
