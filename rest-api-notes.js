@@ -106,7 +106,7 @@ application/json //under value
 module.exports.updateModelName = function(id, modelName, options, callback){
   let query = {_id: id};
   let update = {
-    name: modelName.name
+    paramName: modelName.paramName
   }
   ModelName.findOneAndUpdate(query, update, options, callback);   //finds and updates using mongoose
 };
@@ -122,3 +122,27 @@ app.put('/api/modelName/:id', function(req, res){
     res.json(tempModelName);
   })
 });
+
+//delete a model
+model.exports.deleteModelName = function(id, callback){
+  let query = {_id: id};
+  ModelName.remove(query, callback);
+}
+
+//delete in app.js
+app.delete('/api/modelName/:id', function(req, res){
+  let id = req.params.id;
+  ModelName.deleteModelName(id, function(err, tempModelName){
+    if(err){
+      throw err;
+    }
+    res.json(tempModelName)
+  })
+});
+
+/* Adding React to run in app
+-----------------------------------------
+-----------------------------------------
+*/
+
+create-react-app clientName //creates react frontend

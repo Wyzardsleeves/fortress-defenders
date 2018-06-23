@@ -40,12 +40,22 @@ app.post('/api/types', function(req, res){
   })
 });
 
-//update
-//5b2adce5b808941dd4c2fc03
+//update type
 app.put('/api/types/:id', function(req, res){
   let id = req.params.id
   let type = req.body;
   Types.updateType(id, type, {}, function(err, type){
+    if(err){
+      throw err;
+    }
+    res.json(type);
+  })
+});
+
+//delete type
+app.delete('/api/types/:id', function(req, res){
+  let id = req.params.id
+  Types.deleteType(id, function(err, type){
     if(err){
       throw err;
     }
@@ -84,9 +94,35 @@ app.post('/api/cards', function(req, res){
   })
 });
 
+//update a card
+app.put('/api/cards/:id', function(req, res){
+  let id = req.params.id
+  let card = req.body;
+  Cards.updateCard(id, card, {}, function(err, card){
+    if(err){
+      throw err;
+    }
+    res.json(card);
+  })
+});
+
+//delete a card
+app.delete('/api/cards/:id', function(req, res){
+  let id = req.params.id;
+  Cards.deleteCard(id, function(err, card){
+    if(err){
+      throw err;
+    }
+    res.json(card);
+  })
+});
+
+//listen for server
 app.listen(port, function(req, res){
   console.log('Listening on port ' + port);
 });
+
+
 
 /* Card base
 db.cards.insert({ name: "", type: "", passive: "", rank: "", req: "", hp: "", def: "", base_ap: "", image_url: "", skill_1: "", skill_2: "", skill_3: "" })

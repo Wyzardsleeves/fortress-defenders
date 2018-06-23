@@ -18,14 +18,22 @@ module.exports.getTypes = function(callback, limit){
   Types.find(callback).limit(limit);
 };
 
+// Post
 module.exports.addType = function(type, callback){
   Types.create(type, callback);
 };
 
+// Put
 module.exports.updateType = function(id, type, options, callback){
-  let query = {_id: id}
+  let query = {_id: id};
   let update = {
     name: type.name
   }
   Types.findOneAndUpdate(query, update, options, callback);
 };
+
+// Delete
+module.exports.deleteType = function(id, callback){
+  let query = {_id: id};
+  Types.remove(query, callback);
+}

@@ -71,7 +71,31 @@ module.exports.addCard = function(card, callback){
   Cards.create(card, callback);
 }
 
-/*
+module.exports.updateCard = function(id, card, options, callback){
+  let query = {_id: id};
+  let update = {
+    name: card.name,
+    type: card.type,
+    passive: card.passive,
+    rank: card.rank,
+    req: card.req,
+    hp: card.hp,
+    def: card.def,
+    base_ap: card.base_ap,
+    image_url: card.image_url,
+    skill_1: card.skill_1,
+    skill_2: card.skill_2,
+    skill_3: card.skill_3
+  }
+  Cards.findOneAndUpdate(query, update, options, callback);
+}
+
+module.exports.deleteCard = function(id, callback){
+  let query = {_id: id};
+  Cards.remove(query, callback);
+}
+
+/* Card params (quick)
 {
   "name": "Gaul Ghoule",
   "type": "red",
