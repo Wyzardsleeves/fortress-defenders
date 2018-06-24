@@ -4,10 +4,14 @@
   "description": "Iggy's game API",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \" npm run server \" \"npm run client \""
   },
   "dependencies": {
     "body-parser": "*",
+    "concurrently": "^3.6.0",
     "express": "*",
     "mongoose": "*",
     "nodemon": "^1.17.5"

@@ -145,4 +145,52 @@ app.delete('/api/modelName/:id', function(req, res){
 -----------------------------------------
 */
 
+install concurrently    //npm install concurrently
+install nodemon if not installed already  //npm install --save-dev
+
+//package.json (in express)
+"scripts": {  //add script to start server
+  "start": "node app.js",
+  "server": "nodemon app.js"
+}
+
 create-react-app clientName //creates react frontend
+define backend in clientName/package.json  //"proxy": "http://localhost:5000"
+mkdir client/src/Components/cards  //create dir for components
+touch client/src/Components/cards/ComponentName.js  //create compenent for Cards
+build card component  //can reference App.js in same client dir
+
+import componentName into App.js  //import Cards from './components/cards/card'
+
+//build constructor for ComponentName
+constructor(){
+  super();
+  this.state = {
+    componentName: []
+  }
+}
+
+//life cycle method for when something mounts
+componentDidMount(){
+  this.getComponent();
+}
+
+//build fetch (can use axios instead)
+getComponent(){
+  fetch('/api/apiEndLink')
+    .then(res = res.json())
+    .then(componentName => this.setState({componentName}, () => console.log("Component content fetched..", componentName)));
+}
+
+//inject into render
+<ul>
+  {this.state.modelNames.map((modelName) =>
+    <li key={modelName.id}>
+      {modelName.paramName}
+    </li>
+  )}
+</ul>
+
+//concurrently add in main package.json
+"client": "cd client && npm start"  //add a client script to run client
+"dev": "concurrently \" npm run server\" \"npm run client\""
