@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 let cardSchema = mongoose.Schema({
   name:{
     type: String,
-    required: true
+    required: false
   },
   type:{
     type: String,
-    required: true
+    required: false
   },
   passive:{
     type: String,
@@ -15,23 +15,23 @@ let cardSchema = mongoose.Schema({
   },
   rank:{
     type: String,
-    required: true
+    required: false
   },
   req:{
     type: String,
-    required: true
+    required: false
   },
   hp:{
     type: String,
-    required: true
+    required: false
   },
   def:{
     type: String,
-    required: true
+    required: false
   },
   base_ap:{
     type: String,
-    required: true
+    required: false
   },
   image_url:{
     type: String,
@@ -39,7 +39,7 @@ let cardSchema = mongoose.Schema({
   },
   skill_1:{
     type: String,
-    required: true
+    required: false
   },
   skill_2:{
     type: String,
