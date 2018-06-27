@@ -9,6 +9,14 @@ let cardSchema = mongoose.Schema({
     type: String,
     required: false
   },
+  faction:{
+    type: String,
+    required: false
+  },
+  color:{
+    type: String,
+    required: false
+  },
   passive:{
     type: String,
     required: false

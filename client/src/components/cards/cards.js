@@ -32,14 +32,39 @@ class Cards extends Component {
     e.preventDefault();
     let addName = this.refs.cardName.value;
     let addType = this.refs.cardType.value;
+    let addFaction = this.refs.cardFaction.value;
+    let addColor = function(){
+      switch(addFaction){
+        case "BedLamal":
+          return("#462c63")
+          break;
+        case "Savage Lands":
+          return("#a33030")
+          break;
+        case "Forest":
+          return("#48a548")
+          break;
+        case "Aubadel Orda":
+          return("#fbffc9")
+          break;
+        case "Neutral":
+          return("#e2e2e2")
+          break;
+        default:
+          return("#e2e2e2");
+      }
+    };
     console.log(addName);
     console.log(addType);
+    console.log(addFaction);
     fetch('/api/cards/', {
       method: 'POST',
       body: JSON.stringify(
         {
           "name": addName,
-          "type": addType
+          "type": addType,
+          "faction": addFaction,
+          "color": addColor()
         }
       ),
       headers: {
@@ -96,18 +121,18 @@ class Cards extends Component {
             <option value="territory">Territory</option>
           </select>
           <select ref="cardFaction">
-            <option value="##462c63">Bedlamal</option> {/* Indigo */}
-            <option value="#48a548">Forest</option> {/* Green */}
-            <option value="#a33030">Savage Lands</option> {/* Crimson */}
-            <option value="#fbffc9">Aubadel Orda</option> {/* Cream */}
-            <option value="#e2e2e2">Neutral</option> {/* Silver */}
+            <option value="Bedlamal">Bedlamal</option> {/* Indigo #462c63 */}
+            <option value="Forest">Forest</option> {/* Green #48a548 */}
+            <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
+            <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
+            <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
           </select>
           <input type="submit" value="Submit" />
         </form>
         <ul>
           {this.state.cards.map((card) =>
             <li key={card._id}>
-              {card.name} - {card.type} <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span>
+              {card.name} - {card.type} - {card.faction} - {card.color} <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span>
             </li>
           )}
         </ul>
