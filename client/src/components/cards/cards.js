@@ -7,7 +7,7 @@ class Cards extends Component {
     this.state = {
       cards: [],
     }
-
+    //bind ups
     this.getCards = this.getCards.bind(this);
     this.addCard = this.addCard.bind(this);
     this.updateCard = this.updateCard.bind(this);
@@ -33,10 +33,20 @@ class Cards extends Component {
     let addName = this.refs.cardName.value;
     let addType = this.refs.cardType.value;
     let addFaction = this.refs.cardFaction.value;
+    let addHp = this.refs.cardHp.value;
+    let addDef = this.refs.cardDef.value;
+    let addBaseAp = this.refs.cardBaseAp.value;
+    let addRank = this.refs.cardRank.value;
+    let addReq = this.refs.cardReq.value;
+    let addImg = this.refs.cardImgUrl.value;
+    let addPassive = this.refs.cardPassive.value;
+    let addSkill1 = this.refs.cardSkill_1.value;
+    let addSkill2 = this.refs.cardSkill_2.value;
+    let addSkill3 = this.refs.cardSkill_3.value;
     let addColor = function(){
       switch(addFaction){
-        case "BedLamal":
-          return("#462c63")
+        case "Bedlamal":
+          return("#a971e8")
           break;
         case "Savage Lands":
           return("#a33030")
@@ -64,7 +74,17 @@ class Cards extends Component {
           "name": addName,
           "type": addType,
           "faction": addFaction,
-          "color": addColor()
+          "color": addColor(),
+          "hp": addHp,
+          "def": addDef,
+          "base_ap": addBaseAp,
+          "rank": addRank,
+          "req": addReq,
+          "image_url": addImg,
+          "passive": addPassive,
+          "skill_1": addSkill1,
+          "skill_2": addSkill2,
+          "skill_3": addSkill3
         }
       ),
       headers: {
@@ -73,6 +93,7 @@ class Cards extends Component {
     })
     .then(res => res.json());
     console.log("Just added " + addName + " as a " + addType + " card!");
+    document.getElementById("submit-form").reset(); //resets form
     this.getCards();  //refreshes list
   }
 
@@ -102,40 +123,114 @@ class Cards extends Component {
   render() {
     return (
       <div className="cards">
-        <h2>Cards Working!</h2>
-        <form onSubmit={this.addCard}>
-          <input ref="cardName" placeholder="Name here" type="text" name="cardName" />
-          <select ref="cardType">
-            <option value="cleric">Cleric</option>
-            <option value="mage">Mage</option>
-            <option value="warrior">Warrior</option>
-            <option value="marksman">Marksman</option>
-            <option value="trickster">Trickster</option>
-            <option value="beast">Beast</option>
-            <option value="spirit">Spirit</option>
-            <option value="black_smith">Black Smith</option>
-            <option value="siege">Siege</option>
-            <option value="action">Action</option>
-            <option value="reaction">Reaction</option>
-            <option value="fortress">Fortress</option>
-            <option value="territory">Territory</option>
-          </select>
-          <select ref="cardFaction">
-            <option value="Bedlamal">Bedlamal</option> {/* Indigo #462c63 */}
-            <option value="Forest">Forest</option> {/* Green #48a548 */}
-            <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
-            <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
-            <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
-          </select>
-          <input type="submit" value="Submit" />
-        </form>
-        <ul>
-          {this.state.cards.map((card) =>
-            <li key={card._id}>
-              {card.name} - {card.type} - {card.faction} - {card.color} <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span>
-            </li>
-          )}
-        </ul>
+        <div className="card-title">
+          <h2>Cards Working!</h2>
+        </div>
+        <div className="legend">
+          <i style={{color: "#a971e8"}} className="ion ion-record">Bedlamal</i>
+          <i style={{color: "#48a548"}} className="ion ion-record">Forest</i>
+          <i style={{color: "#a33030"}} className="ion ion-record">Savage Lands</i>
+          <i style={{color: "#fbffc9"}} className="ion ion-record">Aubadel Orda</i>
+          <i style={{color: "#e2e2e2"}} className="ion ion-record">Neutral</i>
+        </div>
+        <div className="card-input">
+          <form id="submit-form" onSubmit={this.addCard}>
+            <input ref="cardName" placeholder="Name here" type="text" name="cardName" />
+            <input ref="cardHp" placeholder="HP Amount" type="text" name="cardHp" />
+            <input ref="cardDef" placeholder="Defense here" type="text" name="cardDef" />
+            <input ref="cardBaseAp" placeholder="Base AP here" type="text" name="cardBaseAp" />
+            <input ref="cardRank" placeholder="Rank here" type="text" name="cardRank" />
+            <input ref="cardReq" placeholder="Required here" type="text" name="cardReq" />
+            <input ref="cardImgUrl" placeholder="Image URL here" type="text" name="cardImgUrl" />
+            <input ref="cardPassive" placeholder="Passive here" type="text" name="cardPassive" />
+            <input ref="cardSkill_1" placeholder="Skill #1 here" type="text" name="cardSkill_1" />
+            <input ref="cardSkill_2" placeholder="Skill #2 here" type="text" name="cardSkill_2" />
+            <input ref="cardSkill_3" placeholder="Skill #3 here" type="text" name="cardSkill_3" />
+            <br/>
+            <select ref="cardType">
+              <option value="cleric">Cleric</option>
+              <option value="mage">Mage</option>
+              <option value="warrior">Warrior</option>
+              <option value="marksman">Marksman</option>
+              <option value="trickster">Trickster</option>
+              <option value="beast">Beast</option>
+              <option value="spirit">Spirit</option>
+              <option value="black_smith">Black Smith</option>
+              <option value="siege">Siege</option>
+              <option value="action">Action</option>
+              <option value="reaction">Reaction</option>
+              <option value="fortress">Fortress</option>
+              <option value="territory">Territory</option>
+            </select>
+            <select ref="cardFaction">
+              <option value="Bedlamal">Bedlamal</option> {/* Indigo #a971e8 */}
+              <option value="Forest">Forest</option> {/* Green #48a548 */}
+              <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
+              <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
+              <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
+            </select>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+        <div className="new-list">
+          <ul>
+            {this.state.cards.map((card) =>
+              <li onChange={this.getCards} key={card._id}>  {/* onChange seemingly fixes the no-refresh problem */}
+                <div style={{backgroundColor: card.color}} className="whole-card">
+                  <div className="full">
+                    <div className="left">
+                      {card.name}
+                    </div>
+                    <div className="right">
+                      HP: {card.hp}
+                    </div>
+                  </div>
+                  <div className="full">
+                    <img className="card-img" width="150px" src={card.image_url} />
+                  </div>
+                  <div className="full">
+                    <div className="underline left">
+                      Rank: {card.rank}
+                    </div>
+                    <div className="underline right">
+                      Req: {card.req}
+                    </div>
+                  </div>
+                  <div className="underline justified full">
+                    <p>{card.passive}</p>
+                  </div>
+                  <div className="full align-left">
+                    <span style={{color:"#3c7ee8"}}>Skill 1</span> - {card.skill_1}
+                  </div>
+                  <div className="underline full align-left">
+                    <span style={{color:"#3c7ee8"}}>Skill 2</span> - {card.skill_2}
+                  </div>
+                  <div className="full">
+                    <div className="left">
+                      AP: {card.base_ap}
+                    </div>
+                    <div className="right">
+                      Def: {card.def}
+                    </div>
+                  </div>
+                </div>
+                <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span><br/>
+              </li>
+            )}
+          </ul>
+        </div>
+        {/* this is the original
+        <div className="card-list">
+          <ul>
+            {this.state.cards.map((card) =>
+              <li onChange={this.getCards} key={card._id}>
+                {card.name} - {card.type} - {card.faction} - {card.color} <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span><br/>
+                <img width="100%" src={card.image_url} />
+              </li>
+            )}
+          </ul>
+        </div>
+        */}
       </div>
     );
   }

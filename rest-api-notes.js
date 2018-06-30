@@ -194,3 +194,7 @@ getComponent(){
 //concurrently add in main package.json
 "client": "cd client && npm start"  //add a client script to run client
 "dev": "concurrently \" npm run server\" \"npm run client\""
+
+
+//styling syntax in React
+style={{backgroundColor: #XXXXXX}} //inline styling
