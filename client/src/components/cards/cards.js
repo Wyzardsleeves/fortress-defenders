@@ -20,6 +20,21 @@ class Cards extends Component {
     this.removeCard;
   }
 
+  //function for splicing text
+  infoCleanup(info){
+    if(info.length > 50){
+      return info.slice(0, 80) + "... ";
+    }
+    else if(info.length < 50){
+      let num = 50 - info.length;
+      let spaces = " ";
+      for(var i = 0; i < num; i++){
+        spaces += " ";
+      }
+      return info + spaces;
+    }
+  }
+
   //gets cards via fetch
   getCards(){
     fetch('/api/cards')
@@ -121,6 +136,7 @@ class Cards extends Component {
   }
 
   render() {
+
     return (
       <div className="cards">
         <div className="card-title">
@@ -132,51 +148,60 @@ class Cards extends Component {
           <i style={{color: "#a33030"}} className="ion ion-record">Savage Lands</i>
           <i style={{color: "#fbffc9"}} className="ion ion-record">Aubadel Orda</i>
           <i style={{color: "#e2e2e2"}} className="ion ion-record">Neutral</i>
-        </div>
-        <div className="card-input">
-          <form id="submit-form" onSubmit={this.addCard}>
-            <input ref="cardName" placeholder="Name here" type="text" name="cardName" />
-            <input ref="cardHp" placeholder="HP Amount" type="text" name="cardHp" />
-            <input ref="cardDef" placeholder="Defense here" type="text" name="cardDef" />
-            <input ref="cardBaseAp" placeholder="Base AP here" type="text" name="cardBaseAp" />
-            <input ref="cardRank" placeholder="Rank here" type="text" name="cardRank" />
-            <input ref="cardReq" placeholder="Required here" type="text" name="cardReq" />
-            <input ref="cardImgUrl" placeholder="Image URL here" type="text" name="cardImgUrl" />
-            <input ref="cardPassive" placeholder="Passive here" type="text" name="cardPassive" />
-            <input ref="cardSkill_1" placeholder="Skill #1 here" type="text" name="cardSkill_1" />
-            <input ref="cardSkill_2" placeholder="Skill #2 here" type="text" name="cardSkill_2" />
-            <input ref="cardSkill_3" placeholder="Skill #3 here" type="text" name="cardSkill_3" />
-            <br/>
-            <select ref="cardType">
-              <option value="cleric">Cleric</option>
-              <option value="mage">Mage</option>
-              <option value="warrior">Warrior</option>
-              <option value="marksman">Marksman</option>
-              <option value="trickster">Trickster</option>
-              <option value="beast">Beast</option>
-              <option value="spirit">Spirit</option>
-              <option value="black_smith">Black Smith</option>
-              <option value="siege">Siege</option>
-              <option value="action">Action</option>
-              <option value="reaction">Reaction</option>
-              <option value="fortress">Fortress</option>
-              <option value="territory">Territory</option>
-            </select>
-            <select ref="cardFaction">
-              <option value="Bedlamal">Bedlamal</option> {/* Indigo #a971e8 */}
-              <option value="Forest">Forest</option> {/* Green #48a548 */}
-              <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
-              <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
-              <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
-            </select>
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
+        </div>        
         <div className="new-list">
           <ul>
-            {this.state.cards.map((card) =>
+            <li>
+              <div style={{backgroundColor: "#bef4c2"}} className="whole-card">
+                <div>New Card</div>
+                <div className="card-input">
+                  <form id="submit-form" onSubmit={this.addCard}>
+                    <input ref="cardName" placeholder="Name here" type="text" name="cardName" />
+                    <input ref="cardHp" placeholder="HP Amount" type="text" name="cardHp" />
+                    <input ref="cardDef" placeholder="Defense here" type="text" name="cardDef" />
+                    <input ref="cardBaseAp" placeholder="Base AP here" type="text" name="cardBaseAp" />
+                    <input ref="cardRank" placeholder="Rank here" type="text" name="cardRank" />
+                    <input ref="cardReq" placeholder="Required here" type="text" name="cardReq" />
+                    <input ref="cardImgUrl" placeholder="Image URL here" type="text" name="cardImgUrl" />
+                    <input ref="cardPassive" placeholder="Passive here" type="text" name="cardPassive" />
+                    <input ref="cardSkill_1" placeholder="Skill #1 here" type="text" name="cardSkill_1" />
+                    <input ref="cardSkill_2" placeholder="Skill #2 here" type="text" name="cardSkill_2" />
+                    <input ref="cardSkill_3" placeholder="Skill #3 here" type="text" name="cardSkill_3" />
+                    <br/>
+                    <select ref="cardType">
+                      <option value="cleric">Cleric</option>
+                      <option value="mage">Mage</option>
+                      <option value="warrior">Warrior</option>
+                      <option value="marksman">Marksman</option>
+                      <option value="trickster">Trickster</option>
+                      <option value="beast">Beast</option>
+                      <option value="spirit">Spirit</option>
+                      <option value="black_smith">Black Smith</option>
+                      <option value="siege">Siege</option>
+                      <option value="action">Action</option>
+                      <option value="reaction">Reaction</option>
+                      <option value="fortress">Fortress</option>
+                      <option value="territory">Territory</option>
+                    </select>
+                    <select ref="cardFaction">
+                      <option value="Bedlamal">Bedlamal</option> {/* Indigo #a971e8 */}
+                      <option value="Forest">Forest</option> {/* Green #48a548 */}
+                      <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
+                      <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
+                      <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
+                    </select>
+                    <input type="submit" value="Submit" />
+                  </form>
+                </div>
+              </div>
+              <div className="card-foot">
+                {/* <i className="ion-close update" onClick={(e) => this.updateCard(e, card)}></i> */}
+                <i className="ion-plus-round new"></i><br/>
+              </div>
+            </li>
+            {this.state.cards.reverse().map((card) =>
               <li onChange={this.getCards} key={card._id}>  {/* onChange seemingly fixes the no-refresh problem */}
-                <div style={{backgroundColor: card.color}} className="whole-card">
+              <div style={{backgroundColor: card.color}} className="whole-card">
                   <div className="full">
                     <div className="left">
                       {card.name}
@@ -186,7 +211,9 @@ class Cards extends Component {
                     </div>
                   </div>
                   <div className="full">
-                    <img className="card-img" width="150px" src={card.image_url} />
+                    <div className="crop">
+                      <img className="card-img" width="150px" alt={card.name} src={card.image_url} />
+                    </div>
                   </div>
                   <div className="full">
                     <div className="underline left">
@@ -197,15 +224,22 @@ class Cards extends Component {
                     </div>
                   </div>
                   <div className="underline justified full">
-                    <p>{card.passive}</p>
+                    <p title={card.passive}>{this.infoCleanup(card.passive)}</p>
                   </div>
                   <div className="full align-left">
                     <span style={{color:"#3c7ee8"}}>Skill 1</span> - {card.skill_1}
                   </div>
-                  <div className="underline full align-left">
+                  { card.skill_2 != "-" &&
+                  <div className="full align-left">
                     <span style={{color:"#3c7ee8"}}>Skill 2</span> - {card.skill_2}
                   </div>
-                  <div className="full">
+                  }
+                  { card.skill_3 != "-" &&
+                  <div className="full align-left">
+                    <span style={{color:"#3c7ee8"}}>Skill 3</span> - {card.skill_2}
+                  </div>
+                  }
+                  <div className="overline full">
                     <div className="left">
                       AP: {card.base_ap}
                     </div>
@@ -214,7 +248,11 @@ class Cards extends Component {
                     </div>
                   </div>
                 </div>
-                <span className="close" onClick={(e) => this.removeCard(e, card)}>X</span><br/>
+                <div className="card-foot">
+                  {/* <i className="ion-close update" onClick={(e) => this.updateCard(e, card)}></i> */}
+                  <i className="ion-edit update"></i>
+                  <i className="ion-close close" onClick={(e) => this.removeCard(e, card)}></i><br/>
+                </div>
               </li>
             )}
           </ul>

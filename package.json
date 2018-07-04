@@ -4,10 +4,10 @@
   "description": "Iggy's game API",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "server": "nodemon app.js",
     "client": "cd client && npm start",
-    "dev": "concurrently \" npm run server \" \"npm run client \"",
-    "start": "npm run dev"
+    "dev": "concurrently \" npm run server \" \"npm run client \""
   },
   "dependencies": {
     "body-parser": "*",

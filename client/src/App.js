@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Cards from './components/cards/cards';
 import playing_cards from './assets/playing_cards.png';
