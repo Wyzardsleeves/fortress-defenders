@@ -1,36 +1,80 @@
 import React, { Component } from 'react';
 import './cards.css';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 const cardsUrl= '/api/cards/';  //url for cards
 
 class Cards extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       cards: [],
+      modalIsOpen: false,
+      currentCard: '',
+      editName: '',
+      editImg: ''
     }
     //bind ups
     this.getCards = this.getCards.bind(this);
     this.addCard = this.addCard.bind(this);
     this.updateCard = this.updateCard.bind(this);
     this.removeCard = this.removeCard.bind(this);
+
+    //modal binds
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    //this.currentCard = this.currentCard.bind(this);
   }
+
+  //modal functions-------------------------
+  openModal(e, card) {
+    e.preventDefault();
+    let cardId = card._id;
+    console.log(cardId);
+    this.setState({modalIsOpen: true});
+    this.setState({currentCard: card});
+    this.setState({editName: this.state.currentCard.name});
+  }
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+  //----------------------------------------
 
   componentWillMount(){
     this.getCards();
     this.updateCard;
     this.addCard;
     this.removeCard;
+    this.currentCard;
+    this.openModal;
+    this.handleNameChange;
+    this.handleImgChange;
   }
 
   //function for splicing text
   infoCleanup(info){
-    if(info.length > 50){
-      return info.slice(0, 60) + "... ";
+    if(info.length > 75){
+      return info.slice(0, 75) + "... ";
     }
-    else if(info.length < 50){
-      let num = 50 - info.length;
+    else if(info.length < 75){
+      let num = 75 - info.length;
       let spaces = " ";
       for(var i = 0; i < num; i++){
         spaces += " ";
@@ -53,6 +97,7 @@ class Cards extends Component {
     })
   }
 
+  //applies color for
   //add card via post request
   addCard(e){
     e.preventDefault();
@@ -121,22 +166,23 @@ class Cards extends Component {
   }
 
   //edit a card via put request
-  updateCard(e, card){
+  updateCard(e){
     e.preventDefault();
+    let card = this.state.currentCard;
     let id = card._id;
-    let editName = this.refs.cardName.value;
-    let editType = this.refs.cardType.value;
-    let editFaction = this.refs.cardFaction.value;
-    let editHp = this.refs.cardHp.value;
-    let editDef = this.refs.cardDef.value;
-    let editBaseAp = this.refs.cardBaseAp.value;
-    let editRank = this.refs.cardRank.value;
-    let editReq = this.refs.cardReq.value;
-    let editImg = this.refs.cardImgUrl.value;
-    let editPassive = this.refs.cardPassive.value;
-    let editSkill1 = this.refs.cardSkill_1.value;
-    let editSkill2 = this.refs.cardSkill_2.value;
-    let editSkill3 = this.refs.cardSkill_3.value;
+    let editName = this.refs.editName.value;
+    let editType = this.refs.editType.value;
+    let editFaction = this.refs.editFaction.value;
+    let editHp = this.refs.editHp.value;
+    let editDef = this.refs.editDef.value;
+    let editBaseAp = this.refs.editBaseAp.value;
+    let editRank = this.refs.editRank.value;
+    let editReq = this.refs.editReq.value;
+    let editImg = this.refs.editImgUrl.value;
+    let editPassive = this.refs.editPassive.value;
+    let editSkill1 = this.refs.editSkill_1.value;
+    let editSkill2 = this.refs.editSkill_2.value;
+    let editSkill3 = this.refs.editSkill_3.value;
     let editColor = function(){
       switch(editFaction){
         case "Bedlamal":
@@ -184,6 +230,7 @@ class Cards extends Component {
     })
     .then(res => res.json())
     .then(console.log(card.name + ' updated!'));
+    this.closeModal();
     this.getCards();  //refreshes list
   }
 
@@ -199,16 +246,78 @@ class Cards extends Component {
     this.getCards();  //refreshes list
   }
 
-  render() {
+  //onChange={(e) => this.handleImgChange(e, this.state.editImg)}
 
+  render() {
     return (
       <div className="cards">
+        {/*  Modal */}
+        <div>
+          {/*<button onClick={this.openModal}>Open Modal</button>*/}
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal">
+
+            <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+            <button onClick={this.closeModal}>close</button>
+            <section className="update-card-modal">
+              <div style={{backgroundColor: "#bef4c2"}} className="whole-card">
+                <div style={{color: "green"}}>New Card</div>
+                <div className="card-input">
+                  <form id="modal-form">
+                    <input ref="editName" placeholder="Name here" type="text" name="editName" defaultValue={this.state.currentCard.name} />
+                    <input ref="editHp" placeholder="HP Amount" type="text" name="editHp" defaultValue={this.state.currentCard.hp} />
+                    <input ref="editDef" placeholder="Defense here" type="text" name="editDef" defaultValue={this.state.currentCard.def} />
+                    <input ref="editBaseAp" placeholder="Base AP here" type="text" name="editBaseAp" defaultValue={this.state.currentCard.base_ap} />
+                    <input ref="editRank" placeholder="Rank here" type="text" name="editRank" defaultValue={this.state.currentCard.rank} />
+                    <input ref="editReq" placeholder="Required here" type="text" name="editReq" defaultValue={this.state.currentCard.req} />
+                    <input ref="editImgUrl" placeholder="Image URL here" type="text" name="editImgUrl" defaultValue={this.state.currentCard.image_url}/>
+                    <input ref="editPassive" placeholder="Passive here" type="text" name="editPassive" defaultValue={this.state.currentCard.passive} />
+                    <input ref="editSkill_1" placeholder="Skill #1 here" type="text" name="editSkill_1" defaultValue={this.state.currentCard.skill_1} />
+                    <input ref="editSkill_2" placeholder="Skill #2 here" type="text" name="editSkill_2" defaultValue={this.state.currentCard.skill_2} />
+                    <input ref="editSkill_3" placeholder="Skill #3 here" type="text" name="editSkill_3" defaultValue={this.state.currentCard.skill_3} />
+                    <br/>
+                    <select ref="editType" defaultValue={this.state.currentCard.type}>
+                      <option value="-">-</option>
+                      <option value="cleric">Cleric</option>
+                      <option value="mage">Mage</option>
+                      <option value="warrior">Warrior</option>
+                      <option value="marksman">Marksman</option>
+                      <option value="trickster">Trickster</option>
+                      <option value="beast">Beast</option>
+                      <option value="spirit">Spirit</option>
+                      <option value="black_smith">Black Smith</option>
+                      <option value="siege">Siege</option>
+                      <option value="action">Action</option>
+                      <option value="reaction">Reaction</option>
+                      <option value="fortress">Fortress</option>
+                      <option value="territory">Territory</option>
+                    </select>
+                    <select ref="editFaction" defaultValue={this.state.currentCard.faction}>
+                      <option value="-">-</option>
+                      <option value="Bedlamal">Bedlamal</option> {/* Indigo #a971e8 */}
+                      <option value="Forest">Forest</option> {/* Green #48a548 */}
+                      <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
+                      <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
+                      <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
+                    </select>
+                  </form>
+                </div>
+              </div>
+              <div className="card-foot">
+                <i className="ion-plus-round update" onClick={(e) => this.updateCard(e)}></i><br/>
+              </div>
+            </section>
+          </Modal>
+        </div>
+        {/* End Modal */}
+
         <div className="card-title">
           <h2>Cards Working!</h2>
         </div>
-        {/* Going to stick a modal here for the updates */}
-
-        {/* Going to stick a modal here for the updates */}
         <div className="legend">
           <i style={{color: "#a971e8"}} className="ion ion-record">Bedlamal</i>
           <i style={{color: "#48a548"}} className="ion ion-record">Forest</i>
@@ -236,6 +345,7 @@ class Cards extends Component {
                     <input ref="cardSkill_3" placeholder="Skill #3 here" type="text" name="cardSkill_3" />
                     <br/>
                     <select ref="cardType">
+                      <option value="-">-</option>
                       <option value="cleric">Cleric</option>
                       <option value="mage">Mage</option>
                       <option value="warrior">Warrior</option>
@@ -290,7 +400,7 @@ class Cards extends Component {
                     </div>
                   </div>
                   <div className="underline justified full">
-                    <p title={card.passive}>{this.infoCleanup(card.passive)}</p>
+                    <p title={card.passive}>{this.infoCleanup(String(card.passive))}</p>
                   </div>
                   <div className="full align-left">
                     <span style={{color:"#3c7ee8"}}>Skill 1</span> - {card.skill_1}
@@ -315,7 +425,8 @@ class Cards extends Component {
                   </div>
                 </div>
                 <div className="card-foot">
-                  <i className="ion-edit update" onClick={(e) => this.updateCard(e, card)}></i>
+                  {/*<i className="ion-edit update" onClick={(e) => this.updateCard(e, card)}></i>*/}
+                  <i className="ion-edit update" onClick={(e) => this.openModal(e, card)}></i>
                   <i className="ion-close close" onClick={(e) => this.removeCard(e, card)}></i>
                 </div>
               </li>
