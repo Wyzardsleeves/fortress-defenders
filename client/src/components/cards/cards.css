@@ -24,6 +24,21 @@ li{
   border-bottom: 1px solid grey;
   font-family: 'Fjalla One', sans-serif;
 }
+.inner-card{
+  text-align: center;
+}
+.update-card-modal{
+  margin: 0 auto;
+  margin: 1rem;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  border-bottom: 1px solid grey;
+  font-family: 'Fjalla One', sans-serif;
+}
+.update-card-modal .whole-card{
+  width: 20rem;
+  margin: 0 auto;
+}
 
 .whole-card{
   height: 37rem;  /* may change later */
@@ -80,6 +95,33 @@ li{
 .card-foot i{
   margin: 0 1rem;
   padding: 0 0.5rem;
+}
+
+.card-foot-button-1{
+  background-color: white;
+  color: orange;
+  border: 2px solid orange;
+  border-radius: 0.3rem;
+  width: 100%;
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+.card-foot-button-1:hover{
+  background-color: orange;
+  color: white;
+}
+.card-foot-button-2{
+  background-color: white;
+  color: red;
+  border: 2px solid red;
+  border-radius: 0.3rem;
+  width: 100%;
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+.card-foot-button-2:hover{
+  background-color: red;
+  color: white;
 }
 
 .new{

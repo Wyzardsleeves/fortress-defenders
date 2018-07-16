@@ -22,9 +22,7 @@ class Cards extends Component {
     this.state = {
       cards: [],
       modalIsOpen: false,
-      currentCard: '',
-      editName: '',
-      editImg: ''
+      currentCard: ''
     }
     //bind ups
     this.getCards = this.getCards.bind(this);
@@ -36,7 +34,6 @@ class Cards extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    //this.currentCard = this.currentCard.bind(this);
   }
 
   //modal functions-------------------------
@@ -46,11 +43,10 @@ class Cards extends Component {
     console.log(cardId);
     this.setState({modalIsOpen: true});
     this.setState({currentCard: card});
-    this.setState({editName: this.state.currentCard.name});
   }
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
+    //this.subtitle.style.color = '#f00';
   }
   closeModal() {
     this.setState({modalIsOpen: false});
@@ -64,8 +60,6 @@ class Cards extends Component {
     this.removeCard;
     this.currentCard;
     this.openModal;
-    this.handleNameChange;
-    this.handleImgChange;
   }
 
   //function for splicing text
@@ -97,6 +91,28 @@ class Cards extends Component {
     })
   }
 
+  setCardColor(card){
+    switch(card){
+      case "Bedlamal":
+        return("#a971e8")
+        break;
+      case "Savage Lands":
+        return("#a33030")
+        break;
+      case "Forest":
+        return("#48a548")
+        break;
+      case "Aubadel Orda":
+        return("#fbffc9")
+        break;
+      case "Neutral":
+        return("#e2e2e2")
+        break;
+      default:
+        return("#e2e2e2");
+    }
+  }
+
   //applies color for
   //add card via post request
   addCard(e){
@@ -114,27 +130,6 @@ class Cards extends Component {
     let addSkill1 = this.refs.cardSkill_1.value;
     let addSkill2 = this.refs.cardSkill_2.value;
     let addSkill3 = this.refs.cardSkill_3.value;
-    let addColor = function(){
-      switch(addFaction){
-        case "Bedlamal":
-          return("#a971e8")
-          break;
-        case "Savage Lands":
-          return("#a33030")
-          break;
-        case "Forest":
-          return("#48a548")
-          break;
-        case "Aubadel Orda":
-          return("#fbffc9")
-          break;
-        case "Neutral":
-          return("#e2e2e2")
-          break;
-        default:
-          return("#e2e2e2");
-      }
-    };
     fetch(cardsUrl, {
       method: 'POST',
       body: JSON.stringify(
@@ -142,7 +137,7 @@ class Cards extends Component {
           "name": addName,
           "type": addType,
           "faction": addFaction,
-          "color": addColor(),
+          "color": this.setCardColor(addFaction), //addColor(),
           "hp": addHp,
           "def": addDef,
           "base_ap": addBaseAp,
@@ -172,7 +167,7 @@ class Cards extends Component {
     let id = card._id;
     let editName = this.refs.editName.value;
     let editType = this.refs.editType.value;
-    let editFaction = this.refs.editFaction.value;
+    //let editFaction = this.refs.editFaction.value;
     let editHp = this.refs.editHp.value;
     let editDef = this.refs.editDef.value;
     let editBaseAp = this.refs.editBaseAp.value;
@@ -183,35 +178,14 @@ class Cards extends Component {
     let editSkill1 = this.refs.editSkill_1.value;
     let editSkill2 = this.refs.editSkill_2.value;
     let editSkill3 = this.refs.editSkill_3.value;
-    let editColor = function(){
-      switch(editFaction){
-        case "Bedlamal":
-          return("#a971e8")
-          break;
-        case "Savage Lands":
-          return("#a33030")
-          break;
-        case "Forest":
-          return("#48a548")
-          break;
-        case "Aubadel Orda":
-          return("#fbffc9")
-          break;
-        case "Neutral":
-          return("#e2e2e2")
-          break;
-        default:
-          return("#e2e2e2");
-      }
-    };
     fetch(cardsUrl + id, {
       method: 'PUT',
       body: JSON.stringify(
         {
           "name": editName,
           "type": editType,
-          "faction": editFaction,
-          "color": editColor(),
+          //"faction": editFaction,
+          "color": this.state.currentCard.color, //this.setCardColor(editFaction),
           "hp": editHp,
           "def": editDef,
           "base_ap": editBaseAp,
@@ -229,7 +203,7 @@ class Cards extends Component {
       }
     })
     .then(res => res.json())
-    .then(console.log(card.name + ' updated!'));
+    .then(console.log(card.name + ' updated! as ' + card.faction));
     this.closeModal();
     this.getCards();  //refreshes list
   }
@@ -246,14 +220,11 @@ class Cards extends Component {
     this.getCards();  //refreshes list
   }
 
-  //onChange={(e) => this.handleImgChange(e, this.state.editImg)}
-
   render() {
     return (
       <div className="cards">
         {/*  Modal */}
         <div>
-          {/*<button onClick={this.openModal}>Open Modal</button>*/}
           <Modal
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}
@@ -261,11 +232,11 @@ class Cards extends Component {
             style={customStyles}
             contentLabel="Example Modal">
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-            <button onClick={this.closeModal}>close</button>
+            {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
             <section className="update-card-modal">
-              <div style={{backgroundColor: "#bef4c2"}} className="whole-card">
-                <div style={{color: "green"}}>New Card</div>
+              <div style={{backgroundColor: "#fcedde"}} className="whole-card">
+                <div className="inner-card">
+                <div style={{color: "orange"}}>Update {this.state.currentCard.name}</div>
                 <div className="card-input">
                   <form id="modal-form">
                     <input ref="editName" placeholder="Name here" type="text" name="editName" defaultValue={this.state.currentCard.name} />
@@ -274,12 +245,11 @@ class Cards extends Component {
                     <input ref="editBaseAp" placeholder="Base AP here" type="text" name="editBaseAp" defaultValue={this.state.currentCard.base_ap} />
                     <input ref="editRank" placeholder="Rank here" type="text" name="editRank" defaultValue={this.state.currentCard.rank} />
                     <input ref="editReq" placeholder="Required here" type="text" name="editReq" defaultValue={this.state.currentCard.req} />
-                    <input ref="editImgUrl" placeholder="Image URL here" type="text" name="editImgUrl" defaultValue={this.state.currentCard.image_url}/>
+                    <input ref="editImgUrl" placeholder="Image URL here" type="text" name="editImgUrl" defaultValue={this.state.currentCard.image_url} />
                     <input ref="editPassive" placeholder="Passive here" type="text" name="editPassive" defaultValue={this.state.currentCard.passive} />
                     <input ref="editSkill_1" placeholder="Skill #1 here" type="text" name="editSkill_1" defaultValue={this.state.currentCard.skill_1} />
                     <input ref="editSkill_2" placeholder="Skill #2 here" type="text" name="editSkill_2" defaultValue={this.state.currentCard.skill_2} />
                     <input ref="editSkill_3" placeholder="Skill #3 here" type="text" name="editSkill_3" defaultValue={this.state.currentCard.skill_3} />
-                    <br/>
                     <select ref="editType" defaultValue={this.state.currentCard.type}>
                       <option value="-">-</option>
                       <option value="cleric">Cleric</option>
@@ -295,20 +265,23 @@ class Cards extends Component {
                       <option value="reaction">Reaction</option>
                       <option value="fortress">Fortress</option>
                       <option value="territory">Territory</option>
-                    </select>
+                    </select>{/*
                     <select ref="editFaction" defaultValue={this.state.currentCard.faction}>
                       <option value="-">-</option>
-                      <option value="Bedlamal">Bedlamal</option> {/* Indigo #a971e8 */}
-                      <option value="Forest">Forest</option> {/* Green #48a548 */}
-                      <option value="Savage Lands">Savage Lands</option> {/* Crimson #a33030 */}
-                      <option value="Aubadel Orda">Aubadel Orda</option> {/* Cream #fbffc9 */}
-                      <option value="Neutral">Neutral</option> {/* Silver #e2e2e2 */}
+                      <option value="Bedlamal">Bedlamal</option>
+                      <option value="Forest">Forest</option>
+                      <option value="Savage Lands">Savage Lands</option>
+                      <option value="Aubadel Orda">Aubadel Orda</option>
+                      <option value="Neutral">Neutral</option>
                     </select>
+                    */}
                   </form>
                 </div>
               </div>
+              </div>
               <div className="card-foot">
-                <i className="ion-plus-round update" onClick={(e) => this.updateCard(e)}></i><br/>
+                <button className="card-foot-button-1" onClick={(e) => this.updateCard(e)}>Update {this.state.currentCard.name}</button>
+                <button className="card-foot-button-2" onClick={this.closeModal}>Cancel</button>
               </div>
             </section>
           </Modal>
@@ -412,7 +385,7 @@ class Cards extends Component {
                   }
                   { card.skill_3 != "-" &&
                   <div className="full align-left">
-                    <span style={{color:"#3c7ee8"}}>Skill 3</span> - {card.skill_2}
+                    <span style={{color:"#3c7ee8"}}>Skill 3</span> - {card.skill_3}
                   </div>
                   }
                   <div className="overline full">
