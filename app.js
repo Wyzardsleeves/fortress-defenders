@@ -8,9 +8,18 @@ const port = 5000;  //set a port
 Types = require('./models/types.js');  //include type.js
 Cards = require('./models/cards.js');  //include cards.js
 
-//connect to mongoose
+//connect to mongoose (local)
+/*
 mongoose.connect('mongodb://localhost/fortressDefenders');
 var db = mongoose.connection;
+*/
+
+//connect to mongoose (heroku)
+const db = require('./config/keys').mongoURI;
+mongoose
+  .connect(db)
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 //body parser middleware
 app.use(bodyParser.json());
