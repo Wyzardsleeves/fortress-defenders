@@ -15,20 +15,22 @@ var db = mongoose.connection;
 //body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-/*
+
 app.get('/', function(req, res){
   res.send("Please use /api/fortress-defenders");
 });
-*/
+
 /* ------------------------ Phase out for development--------------------------- */
 //server static assets if in production
+
 if(process.env.NODE_ENV === 'production'){
   //setstatic folder
   app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
 /* ------------------------ Phase out for development--------------------------- */
 
 //fetch types
