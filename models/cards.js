@@ -84,6 +84,8 @@ module.exports.updateCard = function(id, card, options, callback){
   let update = {
     name: card.name,
     type: card.type,
+    faction: card.faction,
+    color: card.color,
     passive: card.passive,
     rank: card.rank,
     req: card.req,

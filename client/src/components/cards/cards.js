@@ -167,7 +167,7 @@ class Cards extends Component {
     let id = card._id;
     let editName = this.refs.editName.value;
     let editType = this.refs.editType.value;
-    //let editFaction = this.refs.editFaction.value;
+    let editFaction = this.refs.editFaction.value; //probation
     let editHp = this.refs.editHp.value;
     let editDef = this.refs.editDef.value;
     let editBaseAp = this.refs.editBaseAp.value;
@@ -184,8 +184,8 @@ class Cards extends Component {
         {
           "name": editName,
           "type": editType,
-          //"faction": editFaction,
-          "color": this.state.currentCard.color, //this.setCardColor(editFaction),
+          "faction": editFaction, //probation
+          "color": this.setCardColor(editFaction),  //this.state.currentCard.color, probation
           "hp": editHp,
           "def": editDef,
           "base_ap": editBaseAp,
@@ -266,7 +266,7 @@ class Cards extends Component {
                       <option value="fortress">Fortress</option>
                       <option value="territory">Territory</option>
                     </select>
-                    {/*
+
                     <select ref="editFaction" defaultValue={this.state.currentCard.faction}>
                       <option value="-">-</option>
                       <option value="Bedlamal">Bedlamal</option>
@@ -275,7 +275,7 @@ class Cards extends Component {
                       <option value="Aubadel Orda">Aubadel Orda</option>
                       <option value="Neutral">Neutral</option>
                     </select>
-                    */}
+                  
                   </form>
                 </div>
               </div>
