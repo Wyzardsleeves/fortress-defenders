@@ -15,11 +15,11 @@ var db = mongoose.connection;
 //body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+/*
 app.get('/', function(req, res){
   res.send("Please use /api/fortress-defenders");
 });
-
+*/
 /* ------------------------ Phase out for development--------------------------- */
 //server static assets if in production
 //if(proccess.env.NODE_ENV === 'production'){
