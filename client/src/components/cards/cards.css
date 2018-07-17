@@ -100,7 +100,7 @@ li{
 .card-foot-button-1{
   background-color: white;
   color: orange;
-  border: 2px solid orange;
+  border: 1px solid orange;
   border-radius: 0.3rem;
   width: 100%;
   padding: 0.2rem;
@@ -113,7 +113,7 @@ li{
 .card-foot-button-2{
   background-color: white;
   color: red;
-  border: 2px solid red;
+  border: 1px solid red;
   border-radius: 0.3rem;
   width: 100%;
   padding: 0.2rem;

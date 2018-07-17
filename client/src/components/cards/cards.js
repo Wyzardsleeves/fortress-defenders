@@ -265,7 +265,8 @@ class Cards extends Component {
                       <option value="reaction">Reaction</option>
                       <option value="fortress">Fortress</option>
                       <option value="territory">Territory</option>
-                    </select>{/*
+                    </select>
+                    {/*
                     <select ref="editFaction" defaultValue={this.state.currentCard.faction}>
                       <option value="-">-</option>
                       <option value="Bedlamal">Bedlamal</option>
