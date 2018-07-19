@@ -62,6 +62,10 @@ class Cards extends Component {
     this.openModal;
   }
 
+  componentDidMount() { //test this out
+    window.addEventListener('load', this.getCards);
+ }
+
   //function for splicing text
   infoCleanup(info){
     if(info.length > 75){
@@ -275,7 +279,7 @@ class Cards extends Component {
                       <option value="Aubadel Orda">Aubadel Orda</option>
                       <option value="Neutral">Neutral</option>
                     </select>
-                  
+
                   </form>
                 </div>
               </div>
