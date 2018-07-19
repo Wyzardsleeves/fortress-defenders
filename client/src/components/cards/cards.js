@@ -63,7 +63,7 @@ class Cards extends Component {
   }
 
   componentDidMount() { //test this out
-    window.addEventListener('load', this.getCards);
+    window.addEventListener('load', this.getCards());
  }
 
   //function for splicing text
