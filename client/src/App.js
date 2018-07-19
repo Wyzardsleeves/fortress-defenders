@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Cards from './components/cards/cards';
-import playing_cards from './assets/playing_cards.png';
+import playing_cards from './assets/playing-cards.png';
 
 class App extends Component {
   render() {
@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={playing_cards} className="App-logo" alt="logo" />
-          <h1 className="App-title">Fortress Defenders API</h1>
+          <h1 className="App-title">Fortress Defenders</h1>
         </header>
         <Cards />
       </div>

@@ -294,7 +294,7 @@ class Cards extends Component {
         {/* End Modal */}
 
         <div className="card-title">
-          <h2>Cards Working!</h2>
+          <h2>Fortress Defenders API</h2>
         </div>
         <div className="legend">
           <i style={{color: "#a971e8"}} className="ion ion-record">Bedlamal</i>
